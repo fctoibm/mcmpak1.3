@@ -1,0 +1,5 @@
+# tasks file for create_helper_kvm
+
+- include: prereq_mcm_install.yml
+- include: reinstall_mcm_pak.yml
+

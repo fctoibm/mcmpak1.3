@@ -1,0 +1,92 @@
+
+
+- name: Log into private registry and force re-authorization
+  docker_login:
+    registry: "{{ ENTITLED_REGISTRY }}"
+    username: "{{ ENTITLED_REGISTRY_USER }}"
+    password: "{{ ENTITLED_REGISTRY_KEY }}"
+    reauthorize: yes
+
+
+- name: Add IP address of all hosts to all hosts
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^{{ ocp_ip }}'
+    line: " {{ocp_ip}} {{ ocp_api_fqdn }} {{ ocp_auth_fdqn}}"
+    state: present
+
+- name: Log in (obtain access token)
+  k8s_auth:
+    host: "https://{{ ocp_api_fqdn }}:{{ ocp_api_port }}"
+    username: "{{ oc_admin_user }}"
+    password: "{{ oc_admin_password }}"
+    validate_certs: "no"
+  register: k8s_auth_results
+
+
+- debug:
+    msg: AUTH_RESULTS {{ k8s_auth_results }}
+
+
+
+- name: Set Facts
+  set_fact: kubeconfig="/tmp/openshift-management-{{ ansible_date_time.epoch }}/config"
+  
+
+
+- name: Create Directory
+  file: path="{{ kubeconfig | dirname }}" state=directory
+  notify: cleanup openshift login
+
+
+
+- name: Login to OpenShift
+  shell: oc login --server=https://{{ ocp_api_fqdn }}:6443  --token={{ k8s_auth_results.k8s_auth.api_key }} --insecure-skip-tls-verify
+  environment:
+   KUBECONFIG: "{{ kubeconfig }}" 
+  
+
+
+- name: Print some debug information 
+  debug: 
+    msg: "{{ kubeconfig }}"       
+  tags: debug_info   
+
+- name: Create a directory if it does not exist
+  file:
+    path: ~/.kube
+    state: directory
+    mode: '0755'
+
+
+- name: If follow=yes, /path/to/file will be overwritten by contents of kube.conf
+  copy:
+    src: "{{ kubeconfig }}"
+    remote_src: yes
+    dest: ~/.kube/config  # link to /path/to/file
+    follow: yes
+    
+- name: If follow=yes, /path/to/file will be overwritten by contents of kube.conf
+  copy:
+    src: "{{ kubeconfig }}"
+    remote_src: yes
+    dest: /opt/ibm-multicloud-manager-{{ ICMCM_VERSION }}/cluster/kubeconfig  # link to /path/to/file
+    follow: yes
+    
+    
+- name: Kubernetes Docker-registry secret
+  command: "oc create  -n kube-system secret docker-registry entitled-registry --docker-server={{ ENTITLED_REGISTRY }} --docker-username={{ ENTITLED_REGISTRY_USER }} --docker-password={{ ENTITLED_REGISTRY_KEY }} --docker-email=mcmpak@us.ibm.com"
+  register: result
+  failed_when: 
+     - result.rc != 0 and "Error from server (AlreadyExists)" in result.stdout
+
+- name: Kubernetes Docker-registry secret
+  command: "oc secrets -n kube-system link  default entitled-registry --for=pull"
+  register: result
+  failed_when: 
+     - result.rc != 0
+
+
+   
+
+

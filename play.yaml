@@ -1,0 +1,22 @@
+
+
+- hosts: "all"
+  roles:
+    - { role: setup_kvm_server, tags: [ 'kvm' ] }
+    - { role: create_kvm_network, tags: [ 'kvm' ] }
+    - { role: create_pak_helper_kvm, tags: [ 'kvm' ] }
+    - { role: delete_pak_helper_kvm,  tags: [ 'kvmdelete' ] }
+
+
+
+
+
+    - { role: create_pak_helper_vmware, tags: [ 'vmware' ] }
+
+    - { role: pak_setup_install, tags: [ 'setupmcmpak' ] }
+    - { role: pak_reinstall_only, tags: [ 'reinstall' ] }
+    - { role: pak_uninstall_only, tags: [ 'uninstall' ] }
+
+       
+    
+

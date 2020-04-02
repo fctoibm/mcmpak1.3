@@ -1,0 +1,7 @@
+
+
+- name: Run the cloud  pak for mcm installer command to uninstall
+  shell: "docker run  -v ~/.kube:/root/.kube:z -u 0 -t -e LICENSE=accept -v /opt/ibm-multicloud-manager-{{ ICMCM_VERSION }}:/installer/cluster:z -v /var/run:/var/run:z -v /etc/docker:/etc/docker:z --dns={{ ocp_dns }} --security-opt label:disable {{ ENTITLED_REGISTRY }}/\"cp/icp-foundation/mcm-inception:{{ ICMCM_INCEPTION_VERSION }}\" uninstall-with-openshift"
+  tags: uninstall
+  
+
