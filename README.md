@@ -1,24 +1,24 @@
-Installing Application Pak  4.X 
+Installing MCM Pak  1.3 
 ===============================
 
 
-The guide will get you up and running with Application Pak 4.x. on OCP 4.3. The setup assumes OCP 4.3 is already installed and administration rights access available to deploy the Application Pak.
+The guide will get you up and running with MCM Pak 4.x. on OCP 4.3. The setup assumes OCP 4.3 is already installed and administration rights access available to deploy the MCM Pak.
 The guide assumes OCP 4.3 installed using the same GitHub repository if this is not the case, please make sure the OCP worker node capacity is matched following table:  
 
 ## Hardware requirements
 
 | Software      | vCPU   | Mem  | HDD | Node
 | ------          | ------ |----  | --- | ------ |
-| Kabanero Enterprise | 8  | 20 | 25 | 2|
-| Transformation Advisor | 2  | 8 | 8 |  |
-| Application Navigator |  1 | 3 | 3 |  |
-| Total |  12 | 24.5 | 36 | 2 |
+| Worker Node  | 12  | 24 | 150 | 1|
+| Worker Node | 12  | 24 | 150 | 1 |
+| Worker Node |  12 | 24 | 150 | 1 |
+| Total |  36 | 72 | 450 | 3 |
 
 
-Deploying Application Pak
+Deploying MCM Pak
 ------------------------------------
 
-The installation support two options VMWare or KVM install, and both will deploy VM guest if required. The VM guest called PakHelper node act as a client to install Application Pak. There is no reason to deploy a VM guest client if you already have VM guest centos 7 OS available in the same network. If this is already in place, please skip the option one and two, but in case you don't have VM guest available, please execute both option 1 or 2 and 3. Please follow the Flowchart to figure out which steps need to be performed on your environment.
+The installation support two options VMWare or KVM install, and both will deploy VM guest if required. The VM guest called PakHelper node act as a client to install MCM Pak. There is no reason to deploy a VM guest client if you already have VM guest centos 7 OS available in the same network. If this is already in place, please skip the option one and two, but in case you don't have VM guest available, please execute both option 1 or 2 and 3. Please follow the Flowchart to figure out which steps need to be performed on your environment.
 
 ![Flow Chart](images/flow_chart.png)
  
@@ -48,7 +48,7 @@ iptables-restore < /root/savedrules.txt
 
 ### Execute the Playbook ###
  
-This play book will create Application Pak Helper VM guest on KVM Host. The new VM will access the OCP servers and  public network access to download yum packages.
+This play book will create MCM Pak Helper VM guest on KVM Host. The new VM will access the OCP servers and  public network access to download yum packages.
 
 > **NOTE:** If the client is already available, please proceed to option 3.
 
@@ -75,7 +75,7 @@ Edit the [hosts](./hosts) file vmguest section to match the pakhelper node infor
 
 ### Execute the Playbook ###
  
-This play book will create Application Pak Helper VM guest on VMware Host. The new VM will access the OCP servers and  public network access to download yum packages.
+This play book will create MCM Pak Helper VM guest on VMware Host. The new VM will access the OCP servers and  public network access to download yum packages.
 
 
 > **NOTE:** If the client is already available, please proceed to option 3.
@@ -92,15 +92,16 @@ Option Three (Clinet Only)
 Depending on the above flow the -e @<input variable YOUR_VARS.YAML> could be vmwarevars.yaml or kvmvars.yaml
 
 ```
-ansible-playbook -vv -e @YOUR_VARS.YML play.yaml -t setupapppak --limit "vmguest"
+ansible-playbook -vv -e @YOUR_VARS.YML play.yaml -t setupmcmpak --limit "vmguest"
 
 ```
-> **NOTE:**: If the install fails and shows the following message in the end,  :red_circle: "Once the problem is resolved or the status of the InstallPlan becomes 'Complete', re-run the installer to complete the installation process."  :red_circle: Then please execute the following command. The error shows install didn't finish but timed out, and by issuing the command the install will start from where it left off earlier. 
-![Install Fails](images/failed_install.png)
+> **NOTE:**: If the install fails uninstall the MCM Pak and then run the resinstall commmand
 
 
 ```
-ansible-playbook -v -e @YOUR_VARS.YML  play.yaml -t retry --limit "vmguest"
+ansible-playbook -v -e @YOUR_VARS.YML  play.yaml -t uninstall --limit "vmguest"
+ansible-playbook -v -e @YOUR_VARS.YML  play.yaml -t reinstall --limit "vmguest"
+
 
 ```
 
@@ -114,8 +115,8 @@ iptables-restore < /root/savedrules_pak.txt
 ```
 
 
-After Application Pak Installation 
+After MCM Pak Installation 
 ------------------------------------
-Follow the [After installation](https://www.ibm.com/support/knowledgecenter/SSCSJL_4.x/install-icpa-cli.html/ "After installation link")  section to verify the install 
+Follow the [After installation](https://www.ibm.com/support/knowledgecenter/SSFC4F_1.3.0/kc_welcome_cloud_pak.html/ "After installation link")  section to verify the install 
 
 
