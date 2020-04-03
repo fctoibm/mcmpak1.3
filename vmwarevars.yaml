@@ -20,7 +20,7 @@ ICMCM_VERSION: "1.3"
 ICMCM_INCEPTION_VERSION: "3.2.5"
 ENTITLED_REGISTRY: "cp.icr.io"
 ENTITLED_REGISTRY_USER: "cp"
-# Follow the instruction ( https://github.ibm.com/CloudPakOpenContent/cloudpak-entitlement/ )to download token
+# Follow the instruction ( https://myibm.ibm.com/products-services/containerlibrary )to download token
 ENTITLED_REGISTRY_KEY: ""
 
 
