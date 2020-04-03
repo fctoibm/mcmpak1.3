@@ -86,7 +86,7 @@ ansible-playbook -v -e @vmwarevars.yaml play.yaml -t vmware --limit "vmwarehost"
 ```
 
 
-Option Three (Clinet Only)
+Option Three (Client Only)
 --------------------------
 --------------------------
 Depending on the above flow the -e @<input variable YOUR_VARS.YAML> could be vmwarevars.yaml or kvmvars.yaml
