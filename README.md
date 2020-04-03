@@ -81,7 +81,7 @@ This play book will create MCM Pak Helper VM guest on VMware Host. The new VM wi
 > **NOTE:** If the client is already available, please proceed to option 3.
 
 ```
-Run the playbook to setup the kvmhost
+Run the playbook to setup the vmwarehost
 ansible-playbook -v -e @vmwarevars.yaml play.yaml -t vmware --limit "vmwarehost"
 ```
 

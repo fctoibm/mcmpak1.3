@@ -27,9 +27,9 @@ govc_insecure: 1
 template_name: "{{pakhelpernode_hostname}}"
 host: "{{ vcenter_ip }}"
 datacenter: "{{vcenter_datacenter }}" # govc ls -t Datacenter
-datastore: "{{ target_esx_datastore }}" # govc ls -t Datastore '/*/datastore/Shared Storages/*'
+datastore: "{{ vcenter_datastore }}" # govc ls -t Datastore '/*/datastore/Shared Storages/*'
 ressource_pool: "{{ vcenter_cluster }}/Resources" # govc ls -t ResourcePool '/*/host/*'
-vm_network: "{{ target_esx_portgroup }}" # govc ls -t DistributedVirtualPortgroup '/*/network/*-dvs/VM Network'
+vm_network: "{{ vcenter_portgroup }}" # govc ls -t DistributedVirtualPortgroup '/*/network/*-dvs/VM Network'
 ds_iso_dir: centos_tpl # folder where to place the ISO
 ds_vm_dir: VM_TEMPLATES # folder where to place the VM
 

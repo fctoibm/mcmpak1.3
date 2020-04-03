@@ -37,18 +37,17 @@ MCM_ADMIN_PASSWORD: "passw0rd"
 
 # Vmware information
 
-target_esxi_ip: "10.75.30.135"
-target_esxi_username: ""
-target_esxi_password: ""
-target_esx_datastore: "FISCICP_SAN_03"
-target_esx_portgroup: "VM Network"
 
-vcenter_iso_name: "VMware-VCSA-all-6.7.0-13010631"
+
+
+
 vcenter_username: "demouser@vsphere.local"
 vcenter_password: ""
 vcenter_ip: "10.X.Y.Z"
 vcenter_datacenter: "YOUR_DATA_CENTER_NAME"
 vcenter_cluster: "CLUSTER_NAME"
+vcenter_datastore: "FISCICP_SAN_03"
+vcenter_portgroup: "VM Network"
 
 #Portable IP information Address IBM Cloud for Gov
 portable:
