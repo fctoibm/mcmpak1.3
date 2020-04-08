@@ -13,7 +13,7 @@ The guide assumes OCP 4.3 installed using the same GitHub repository if this is 
 | Worker Node | 12  | 24 | 150 | 1 |
 | Worker Node |  12 | 24 | 150 | 1 |
 | Total |  36 | 72 | 450 | 3 |
-
+> **NOTE:** You can add more worker node to meet the mentioned capacity or update the original VM's CPU/MEM  using the virtual manager console.  
 
 Deploying MCM Pak
 ------------------------------------
