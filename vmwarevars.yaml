@@ -11,7 +11,7 @@ ocp_api_port: 6443
 ocp_ip: 10.75.30.211
 ocp_dns: 10.75.30.156
 oc_admin_user: "kubeadmin"
-oc_admin_password: ""
+oc_admin_password: "your admin password"
 
 
 
