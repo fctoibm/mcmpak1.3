@@ -65,8 +65,8 @@ Option Two (VMWare Only)
 Login to the client VM as root and execute the following commands.
 ```
 cd /opt
-git clone https://github.com/fctoibm/apppak4.x.git
-cd /opt/apppak4.x
+git clone https://github.com/fctoibm/mcm_1.3.git
+cd /opt/mcm_1.3
 ```
 
 Edit the [vmwarevars.yaml](./vmwarevars.yaml) file with the IP addresses that will be assigned to the pakhelper node. The IP addresses need to be right since they will need to access the OpenShift servers.
